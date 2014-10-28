@@ -2,9 +2,9 @@ aDock
 =====
 
 An Arduino based IoT dock station for Android phones to control some home appliances:
-   - a TV through infrared remote
-   - a lamp or something to switch on and off through a 110V/220V AC output relay
-   - a (hacked) Sennheiser Office 1 Headset ( http://en-us.sennheiser.com/wireless-phone-headset-single-sided-dect-sd-office ) through two optocouplers
+   - a TV through infrared remote;
+   - a lamp or something to switch on and off through a 110V/220V AC output relay;
+   - a (hacked) [Sennheiser SD Office 1 Headset](http://en-us.sennheiser.com/wireless-phone-headset-single-sided-dect-sd-office) through two optocouplers.
 
 aDock was originally developed to be used as an assistive technology device for people with severe physical disabilities, like tetraplegia.
 
