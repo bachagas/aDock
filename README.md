@@ -14,19 +14,6 @@ aDock was originally developed to be used as an assistive technology device for 
 ![aDock 3](https://lh3.googleusercontent.com/W8GNl8H-xUPrIfo8NvUDYPI14jcjQFZYaPtALP3RTHU=w390-h219-p-no)
 ![aDock 4](https://lh6.googleusercontent.com/fWBDQ83xDXv43E13XOrkDvRGFU-X3mOkLNQPMSFnPgw=w396-h222-p-no)
 
-Some parts of the code were based on the following references:
-   - http://www.arduino.cc/en/Tutorial/LiquidCrystal: for the LCD (LCM1602B) control;
-   - http://forum.arduino.cc/index.php/topic,4104.0.html and http://playground.arduino.cc/uploads/Learning/relays.pdf : for the relay control;
-   - https://learn.sparkfun.com/tutorials/ir-communication and http://www.righto.com/2009/08/multi-protocol-infrared-remote-library.html: for the infrared communication control using the awesome [IRremote library](http://github.com/shirriff/Arduino-IRremote) and examples by Ken Shirriff;
-   - http://www.martyncurrey.com/?p=34 and http://tronixstuff.com/2010/09/21/education-introduction-to-the-optocoupler/: for the optocouplers part.
-
-For Android communication with Arduino through serial USB take a look at the following references: 
-   - http://android-er.blogspot.com.br/2014/02/android-usb-host-mode-step-by-step.html;
-   - http://android-er.blogspot.com.br/2014/02/send-hello-to-arduino-from-android-in.html;
-   - http://android-er.blogspot.com.br/2014/09/send-data-from-android-to-arduino-uno.html;
-   - http://github.com/bachagas/usb-serial-for-android (Android Java library);
-   - http://github.com/bachagas/USB-Serial-Module (Titanium library for Android).
-
 Hardware
 --------
 
@@ -49,7 +36,7 @@ Hookup Guide
 
 In a very quick and simplified way, everything should be connected like this:
 
-### 1) Connect the LCD:
+#### 1) Connect the LCD:
 		
 		LCD 1602B     Arduino
 		---------------------
@@ -70,7 +57,7 @@ In a very quick and simplified way, everything should be connected like this:
 		 13 (DB6) ->  6
 		 14 (DB7) ->  5
 
-That way the LCD should be initiated like this in code:
+That way the LCD should be initiated like this in the code:
 
 	LiquidCrystal lcd(10,  9, 8, 7, 6, 5);
 
@@ -91,16 +78,16 @@ That way the LCD should be initiated like this in code:
 		      2  ->  RCV (IR sensor output)
 			  3  ->  CTL (driving transistor input for the IR LED)
 		      4  ->  CTL (just a status LED)
-			
-### 4) Connect the two optocouplers':
+
+#### 4) Connect the two optocouplers:
 
 Digital pins 11 and 12 go to pin 1 (input +) of each chip through a 330 Ohms resistor each and ground to pin 2 (input -). Then, connect the two 3.5mm female audio jacks to the optocouplers' outputs: wire the tip to pin 5 (output +) and the sleeve to pin 4 (output -);
 
-### 5) Connect the LEDs:
+#### 5) Connect the LEDs:
 
 The blue LED goes to the Arduino A1 pin (digital pin 15) through a 100 Ohms resistor and the yellow to pin 13 through a 330 Ohms resistor (Note: the ProtoScrewShield have this last connection on the shield);
 
-### 6) Connect the push-buttons:
+#### 6) Connect the push-buttons:
 
 Wire the 4 push-buttons to Arduino pins A2, A3, A4 and A5 --- they will be used as digital pins 16, 17, 18 and 19, respectively;.
 	 
@@ -117,6 +104,22 @@ Installation
 Download the archive from GitHub, decompress it, and use it :)
 Make sure you have all the libraries above correctly installed in your Arduino development environment before opening the code.
 If not, you will need to restart the Arduino IDE after installing the libs.
+
+References
+----------
+
+Some parts of the code were based on the following references:
+   - http://www.arduino.cc/en/Tutorial/LiquidCrystal: for the LCD (LCM1602B) control;
+   - http://forum.arduino.cc/index.php/topic,4104.0.html and http://playground.arduino.cc/uploads/Learning/relays.pdf : for the relay control;
+   - https://learn.sparkfun.com/tutorials/ir-communication and http://www.righto.com/2009/08/multi-protocol-infrared-remote-library.html: for the infrared communication control using the awesome [IRremote library](http://github.com/shirriff/Arduino-IRremote) and examples by Ken Shirriff;
+   - http://www.martyncurrey.com/?p=34 and http://tronixstuff.com/2010/09/21/education-introduction-to-the-optocoupler/: for the optocouplers part.
+
+For Android communication with Arduino through serial USB take a look at the following links: 
+   - http://android-er.blogspot.com.br/2014/02/android-usb-host-mode-step-by-step.html;
+   - http://android-er.blogspot.com.br/2014/02/send-hello-to-arduino-from-android-in.html;
+   - http://android-er.blogspot.com.br/2014/09/send-data-from-android-to-arduino-uno.html;
+   - http://github.com/bachagas/usb-serial-for-android (Android Java library);
+   - http://github.com/bachagas/USB-Serial-Module (Titanium library for Android).
 
 Other information
 -----------------
