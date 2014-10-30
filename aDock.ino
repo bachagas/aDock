@@ -54,7 +54,17 @@ unsigned long timer, recTimer, recTime, seconds;
 int recording = 0;
 int lcdCursor = 0;
 boolean btn1, btn2, btn3, btn4 = false;
+boolean softBtns[] = {false,false,false,false,false}; //software control of the buttons: softBtns[0] is the reset, softBtn[1,2,3,4] is btn1,2,3,4
 boolean communicating = false;
+String command = "";
+
+// Commands constants definitions:
+const int  MAX_COMMAND_LENGTH  = 100;  //the maximum possible length of a command
+const char COMMAND_MARK        = '#';  //indicates a command to be processed
+const char CLEAR               = 'c';  //clear the LCD display and others feedback interfaces
+const char TOGGLE_BUTTON       = 'b';  //toggle a button
+
+void(* reset) (void) = 0;//declare reset function at address 0
 
 void setup()
 {
@@ -206,10 +216,10 @@ void loop() {
   timer = millis();
   // Read buttons:
   // negation because buttons are configured with PULLUP (HIGH is the normal state)
-  btn1 = !digitalRead(BTN1);
-  btn2 = !digitalRead(BTN2);
-  btn3 = !digitalRead(BTN3);
-  btn4 = !digitalRead(BTN4);
+  btn1 = !digitalRead(BTN1)||softBtns[1];
+  btn2 = !digitalRead(BTN2)||softBtns[2];
+  btn3 = !digitalRead(BTN3)||softBtns[3];
+  btn4 = !digitalRead(BTN4)||softBtns[4];
       
   // Writing to the LCD:
   // Prints the seconds since last reset while waiting first data reception:
@@ -231,14 +241,20 @@ void loop() {
   if(Serial.available()){
     communicating = true;
     lcd.setCursor(0, 1);
-    lcdCursor = 0;
     lcd.print("                ");
     delay(100);
     lcd.setCursor(0, 1);
+    lcdCursor = 0;
+    command = "";
+    char c;
     while(Serial.available() > 0){
-      lcd.write(Serial.read());
+      c = Serial.read();
+      lcd.write(c);
+      command += c;
       lcdCursor++;
     }
+    //if a command is received process it:
+    if (command[0]==COMMAND_MARK) processCommand(command.substring(1));
   }
   lcd.setCursor(lcdCursor+1, 1);
   if (btn1) printToAll("(btn1)");
@@ -312,9 +328,71 @@ void loop() {
   lastRecButtonState = recButtonState;
 }
 
+// Prints a string to the serial port and the LCD display
 void printToAll(String text) {
   Serial.println(text);
   //lcd.setCursor(0, 1);
   lcd.print(text);
   delay(100);
+}
+
+// Parse and process a command.
+// Returns true if command is valid (known) and process it; false otherwise.
+boolean processCommand(const String rawCommand) {
+  switch (rawCommand[0]) {
+    case CLEAR:
+      clearInterface();
+      return true;
+      break;
+    case TOGGLE_BUTTON:
+      if (rawCommand[1]==' ') {
+        String comm = rawCommand.substring(2);
+        String params[2];
+        parseParameters(comm, ',', 2, params);
+        int btnIndex = params[0].toInt();
+        Serial.print("Toggle button "); Serial.println(btnIndex);
+        if (btnIndex==0) {
+          printToAll("Resetting!");
+          delay(100);
+          reset();  //call reset
+          delay(100);
+          Serial.println("Will never happens");
+        } else if (btnIndex>=1&&btnIndex<=4) {
+          softBtns[btnIndex] = !softBtns[btnIndex];
+          return true;
+          break;
+        }
+      }
+      //if command not properly parsed, prints help to serial and return
+      Serial.println("Toggles a button by software: #b <btn index:0..4>");
+      return false;
+      break;
+    default: 
+      return false;
+  }
+}
+
+// Parses an input text of parameters separated by a separator.
+// Returns an array of String of size quantity in the output parameter.
+void parseParameters(const String text, const char separator, int quantity, String *output)
+{
+  String temp = text;
+  int i = 0;
+  int last = 0;
+  while (temp && i<quantity) {
+     output[i++] = temp.substring(last,temp.indexOf(separator, last));
+     last = temp.indexOf(separator, last);
+  }
+}
+
+// Clear the LCD display and the communication flag
+void clearInterface() {
+  communicating = false;
+  lcd.write(' '); delay(50);
+  for (int i=0;i<16-2;i++) {
+    lcd.write('*');
+    delay(50);
+  }
+  lcd.setCursor(0, 1);
+  lcd.print("                ");
 }

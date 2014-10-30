@@ -9,10 +9,6 @@ An Arduino based IoT dock station for Android phones to control some home applia
 aDock was originally developed to be used as an assistive technology device for people with severe physical disabilities, like tetraplegia.
 
 ![aDock](https://lh6.googleusercontent.com/-ZKWjFbm4LK8/VEEmTJqalMI/AAAAAAAADxw/OPLhkcUFIHE/w1027-h577-no/IMG_20141017_112033474.jpg)
-![aDock 1](https://lh5.googleusercontent.com/p1U49aUQxMMKjyUqoll-KXYxJKiNjKQgQXaAHQ1dS5g=w390-h219-p-no)
-![aDock 2](https://lh4.googleusercontent.com/Fauxd9TIfo0pjvG5zhMxCcIeeX88-kqLog4BqgA2DdA=w391-h219-p-no)
-![aDock 3](https://lh3.googleusercontent.com/W8GNl8H-xUPrIfo8NvUDYPI14jcjQFZYaPtALP3RTHU=w390-h219-p-no)
-![aDock 4](https://lh6.googleusercontent.com/fWBDQ83xDXv43E13XOrkDvRGFU-X3mOkLNQPMSFnPgw=w396-h222-p-no)
 
 Hardware
 --------
@@ -85,11 +81,11 @@ Digital pins 11 and 12 go to pin 1 (input +) of each chip through a 330 Ohms res
 
 #### 5) Connect the LEDs:
 
-The blue LED goes to the Arduino A1 pin (digital pin 15) through a 100 Ohms resistor and the yellow to pin 13 through a 330 Ohms resistor (Note: the ProtoScrewShield have this last connection on the shield);
+The blue LED goes to the Arduino A1 pin (digital pin 15) through a 100 Ohms resistor and the yellow to pin 13 through a 330 Ohms resistor (Note: the ProtoScrewShield have this last connection on the shield).
 
 #### 6) Connect the push-buttons:
 
-Wire the 4 push-buttons to Arduino pins A2, A3, A4 and A5 --- they will be used as digital pins 16, 17, 18 and 19, respectively;.
+Wire the 4 push-buttons to Arduino pins A2, A3, A4 and A5 --- they will be used as digital input pins 16, 17, 18 and 19, respectively.
 	 
 External dependencies
 ---------------------
@@ -101,7 +97,7 @@ You will need the following Arduino libraries:
 Installation
 ------------
 
-Download the archive from GitHub, decompress it, and use it :)
+Download the archive from GitHub, decompress it, and run it :)
 Make sure you have all the libraries above correctly installed in your Arduino development environment before opening the code.
 If not, you will need to restart the Arduino IDE after installing the libs.
 
