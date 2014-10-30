@@ -350,21 +350,24 @@ boolean processCommand(const String rawCommand) {
         String params[2];
         parseParameters(comm, ',', 2, params);
         int btnIndex = params[0].toInt();
-        Serial.print("Toggle button "); Serial.println(btnIndex);
-        if (btnIndex==0) {
-          printToAll("Resetting!");
-          delay(100);
-          reset();  //call reset
-          delay(100);
-          Serial.println("Will never happens");
-        } else if (btnIndex>=1&&btnIndex<=4) {
-          softBtns[btnIndex] = !softBtns[btnIndex];
-          return true;
-          break;
+        if (btnIndex>=0&&btnIndex<=4) {
+          Serial.print("Toggle button "); Serial.println(btnIndex);
+          if (btnIndex==0) {
+            printToAll("Resetting!");
+            delay(1000);
+            reset();  //call reset
+            delay(100);
+            Serial.println("Will never happens");
+          } else {
+            softBtns[btnIndex] = !softBtns[btnIndex];
+            return true;
+            break;
+          }
         }
       }
       //if command not properly parsed, prints help to serial and return
-      Serial.println("Toggles a button by software: #b <btn index:0..4>");
+      Serial.println("Toggles a button by software.");
+      Serial.println("Use: #b <btn index:0..4>");
       return false;
       break;
     default: 
